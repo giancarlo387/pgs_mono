@@ -646,27 +646,42 @@ function StorefrontSection({ section, primaryColor, company, products }) {
           {displayProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {displayProducts.map((product) => {
-                const productImage = product.main_image?.image_path 
-                  ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}/storage/${product.main_image.image_path}`
-                  : product.images?.[0]?.image_path
-                    ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}/storage/${product.images[0].image_path}`
+                // Use getImageUrl helper function to construct proper image URLs
+                const productImage = product.main_image 
+                  ? getImageUrl(product.main_image)
+                  : product.images?.[0]
+                    ? getImageUrl(product.images[0])
                     : null;
 
                 return (
                   <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group cursor-pointer" onClick={() => window.open(`/buyer/products/${product.id}`, '_blank')}>
-                    {productImage ? (
-                      <img 
-                        src={productImage}
-                        alt={product.name}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-                        <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
+                    <div className="relative w-full h-48 bg-gray-100">
+                      {productImage ? (
+                        <>
+                          <img 
+                            src={productImage}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              console.error('❌ Image failed to load:', productImage);
+                              e.target.style.display = 'none';
+                              e.target.parentElement.querySelector('.fallback-icon')?.classList.remove('hidden');
+                            }}
+                          />
+                          <div className="fallback-icon hidden w-full h-full absolute inset-0 flex items-center justify-center text-gray-400">
+                            <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-lg mb-2 line-clamp-1">{product.name}</h3>
                       <p className="text-sm text-gray-600 mb-2">{product.category}</p>
@@ -850,11 +865,11 @@ function ProductCard({ product, primaryColor }) {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  // Use the SAME working pattern - check main_image first, then images array
-  const productImage = product.main_image?.image_path 
-    ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}/storage/${product.main_image.image_path}`
-    : product.images?.[currentImageIndex]?.image_path
-      ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}/storage/${product.images[currentImageIndex].image_path}`
+  // Use getImageUrl helper function to construct proper image URLs
+  const productImage = product.main_image 
+    ? getImageUrl(product.main_image)
+    : product.images?.[currentImageIndex]
+      ? getImageUrl(product.images[currentImageIndex])
       : null;
 
   return (
