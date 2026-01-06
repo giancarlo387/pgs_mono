@@ -195,11 +195,7 @@ export default function AdminSideBar({ isOpen, onClose }) {
                                 : 'text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900'
                               }
                             `}
-                            onClick={() => {
-                              if (window.innerWidth < 1024) {
-                                onClose();
-                              }
-                            }}
+                            onClick={onClose}
                           >
                             {child.name}
                           </Link>
@@ -221,11 +217,7 @@ export default function AdminSideBar({ isOpen, onClose }) {
                       : 'text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900'
                     }
                   `}
-                  onClick={() => {
-                    if (window.innerWidth < 1024) {
-                      onClose();
-                    }
-                  }}
+                  onClick={onClose}
                 >
                   <Icon className="w-5 h-5 mr-3" />
                   {item.name}

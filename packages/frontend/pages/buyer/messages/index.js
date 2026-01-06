@@ -382,24 +382,38 @@ export default function BuyerMessages() {
         <title>Messages - Pinoy Global Supply</title>
       </Head>
 
-      <div className="fixed inset-0 flex" style={{ top: '64px', left: '0' }}>
-        <BuyerConversationList
-          conversations={conversations}
-          selectedConversation={selectedConversation}
-          onSelectConversation={handleSelectConversation}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          loading={loading}
-        />
+      <div className="h-[calc(100vh-4rem)] flex overflow-hidden">
+        {/* Conversation List - Hidden on mobile when chat is selected */}
+        <div className={`${
+          selectedConversation ? 'hidden md:flex' : 'flex'
+        } w-full md:w-80 lg:w-96 flex-shrink-0`}>
+          <BuyerConversationList
+            conversations={conversations}
+            selectedConversation={selectedConversation}
+            onSelectConversation={handleSelectConversation}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            loading={loading}
+          />
+        </div>
 
-        <BuyerChatWindow
-          conversation={selectedConversation}
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          currentUser={user}
-          loading={messagesLoading}
-          onMessagesUpdate={setMessages}
-        />
+        {/* Chat Window - Full width on mobile, flexible on desktop */}
+        <div className={`${
+          selectedConversation ? 'flex' : 'hidden md:flex'
+        } flex-1 min-w-0`}>
+          <BuyerChatWindow
+            conversation={selectedConversation}
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            currentUser={user}
+            loading={messagesLoading}
+            onMessagesUpdate={setMessages}
+            onBack={() => {
+              setSelectedConversation(null);
+              router.push('/buyer/messages', undefined, { shallow: true });
+            }}
+          />
+        </div>
       </div>
     </>
   );

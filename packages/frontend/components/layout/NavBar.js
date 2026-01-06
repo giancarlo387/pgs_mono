@@ -102,8 +102,8 @@ export default function NavBar({ onMenuToggle, isSidebarOpen }) {
               {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
             
-            <div className="flex-shrink-0 flex items-center ml-4 lg:ml-0 ">
-              <h1 className="text-xl font-bold text-white">Pinoy Global Supply</h1>
+            <div className="flex-shrink-0 flex items-center ml-2 sm:ml-4 lg:ml-0">
+              <h1 className="text-base sm:text-lg md:text-xl font-bold text-white truncate">Pinoy Global Supply</h1>
             </div>
           </div>
 
@@ -143,10 +143,10 @@ export default function NavBar({ onMenuToggle, isSidebarOpen }) {
             </form>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
             {/* Agent Company Indicator */}
             {isAuthenticated && user?.usertype === 'agent' && user?.active_company && (
-              <div className="hidden md:flex items-center bg-white/10 px-3 py-1 rounded-full">
+              <div className="hidden lg:flex items-center bg-white/10 px-3 py-1 rounded-full">
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
                 <span className="text-sm font-medium text-white">
                   {user.active_company.name}
@@ -164,9 +164,9 @@ export default function NavBar({ onMenuToggle, isSidebarOpen }) {
               <div className="relative">
                 <button 
                   onClick={() => router.push('/chat')}
-                  className="p-2 text-white hover:text-gray-200 hover:bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition-colors"
+                  className="p-1.5 sm:p-2 text-white hover:text-gray-200 hover:bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition-colors"
                 >
-                  <MessageSquare className="h-6 w-6" />
+                  <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6" />
                   <ChatNotificationBadge className="absolute -top-1 -right-1" />
                 </button>
               </div>
@@ -174,11 +174,11 @@ export default function NavBar({ onMenuToggle, isSidebarOpen }) {
             
             {/* Notification Bell */}
             {isAuthenticated && (
-              <div className="relative">
-                <button className="p-2 text-white hover:text-gray-200 hover:bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition-colors">
-                  <Bell className="h-6 w-6" />
+              <div className="relative hidden sm:block">
+                <button className="p-1.5 sm:p-2 text-white hover:text-gray-200 hover:bg-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition-colors">
+                  <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
                   {/* Notification Badge */}
-                  <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                     3
                   </span>
                 </button>
@@ -189,13 +189,13 @@ export default function NavBar({ onMenuToggle, isSidebarOpen }) {
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center space-x-2 p-2 text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+                  className="flex items-center space-x-1 sm:space-x-2 p-1 sm:p-2 text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
                 >
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <User className="h-5 w-5 text-[#0046ad]" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                    <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#0046ad]" />
                   </div>
-                  <div className="hidden sm:block">
-                    <div className="text-sm font-medium">{user?.name}</div>
+                  <div className="hidden md:block">
+                    <div className="text-xs sm:text-sm font-medium truncate max-w-[100px] lg:max-w-none">{user?.name}</div>
                     {user?.usertype === 'agent' && user?.active_company && (
                       <div className="text-xs text-gray-200">
                         {user.active_company.company_name}

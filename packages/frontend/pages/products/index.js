@@ -407,54 +407,55 @@ export default function Products() {
         <title>Products - SupplierHub</title>
       </Head>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-secondary-900">Products</h1>
-            <p className="mt-1 text-sm text-secondary-600">
+            <h1 className="text-xl sm:text-2xl font-bold text-secondary-900">Products</h1>
+            <p className="mt-1 text-xs sm:text-sm text-secondary-600">
               Manage your product catalog and listings
             </p>
           </div>
-          <div className="flex space-x-3 mt-4 sm:mt-0">
+          <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
             <Button
               variant="outline"
               onClick={() => setShowBulkUpload(true)}
+              className="flex-1 sm:flex-initial"
             >
               <Upload className="w-4 h-4 mr-2" />
-              Bulk Upload
+              <span className="text-sm sm:text-base">Bulk Upload</span>
             </Button>
-            <Link href="/products/add">
-              <Button>
+            <Link href="/products/add" className="flex-1 sm:flex-initial">
+              <Button className="w-full">
                 <Plus className="w-4 h-4 mr-2" />
-                Add Product
+                <span className="text-sm sm:text-base">Add Product</span>
               </Button>
             </Link>
           </div>
         </div>
 
         {/* Filters and Search */}
-        <Card className="p-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-              <div className="relative">
+        <Card className="p-3 sm:p-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-3 sm:space-y-4 lg:space-y-0 gap-3">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 sm:space-x-4 flex-1">
+              <div className="relative flex-1 sm:flex-initial sm:min-w-[200px] md:min-w-[250px]">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
-              <Button variant="outline">
+              <Button variant="outline" className="flex-1 sm:flex-initial">
                 <Filter className="w-4 h-4 mr-2" />
-                Filters
+                <span className="text-sm sm:text-base">Filters</span>
               </Button>
             </div>
             
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-secondary-600">View:</span>
+            <div className="flex items-center justify-between sm:justify-start space-x-2">
+              <span className="text-xs sm:text-sm text-secondary-600">View:</span>
               <div className="flex border border-secondary-300 rounded-lg">
                 <button
                   onClick={() => setViewMode('grid')}
@@ -519,7 +520,7 @@ export default function Products() {
         {!loading && !error && filteredProducts.length > 0 && (
           <>
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
@@ -531,26 +532,26 @@ export default function Products() {
               </div>
             ) : (
               <Card>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto -mx-3 sm:mx-0">
                   <table className="min-w-full divide-y divide-secondary-200">
                     <thead className="bg-secondary-50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           Product
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="hidden md:table-cell px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           Category
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           Price
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="hidden sm:table-cell px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           MOQ
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="hidden lg:table-cell px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           Status
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -562,73 +563,66 @@ export default function Products() {
                           className="hover:bg-secondary-50 cursor-pointer"
                           onClick={() => handleViewProduct(product.id)}
                         >
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
                             <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10">
+                              <div className="flex-shrink-0 h-8 w-8 sm:h-10 sm:w-10">
                                 {product.image ? (
                                   <img
                                     src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'}/storage/${product.image}`}
                                     alt={product.name}
-                                    className="h-10 w-10 rounded-lg object-cover"
+                                    className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg object-cover"
                                   />
                                 ) : (
-                                  <div className="h-10 w-10 rounded-lg bg-secondary-100 flex items-center justify-center">
+                                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-secondary-100 flex items-center justify-center">
                                     <span className="text-xs font-medium text-secondary-600">
                                       {product.name.charAt(0)}
                                     </span>
                                   </div>
                                 )}
                               </div>
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-secondary-900">
+                              <div className="ml-2 sm:ml-4 min-w-0">
+                                <div className="text-xs sm:text-sm font-medium text-secondary-900 truncate">
                                   {product.name}
                                 </div>
-                                <div className="text-sm text-secondary-500">
+                                <div className="text-xs text-secondary-500 truncate hidden sm:block">
                                   {product.hs_code}
                                 </div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
+                          <td className="hidden md:table-cell px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-secondary-900">
                             {product.category}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-secondary-900 whitespace-nowrap">
                             {product.price}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
+                          <td className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-secondary-900 whitespace-nowrap">
                             {product.moq}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="hidden lg:table-cell px-3 sm:px-6 py-3 sm:py-4">
                             <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                               Active
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <Button 
-                              variant="outline" 
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewProduct(product.id);
-                              }}
-                            >
-                              View
-                            </Button>
-                            <Link href={`/products/edit/${product.id}`}>
-                              <Button variant="outline" size="sm">
-                                Edit
+                          <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium">
+                            <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleViewProduct(product.id);
+                                }}
+                                className="text-xs px-2 py-1"
+                              >
+                                View
                               </Button>
-                            </Link>
-                            <Button
-                              variant="danger"
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteProduct(product.id);
-                              }}
-                            >
-                              Delete
-                            </Button>
+                              <Link href={`/products/edit/${product.id}`} className="hidden sm:inline-block">
+                                <Button variant="outline" size="sm" className="text-xs px-2 py-1">
+                                  Edit
+                                </Button>
+                              </Link>
+                            </div>
                           </td>
                         </tr>
                       ))}

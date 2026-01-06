@@ -40,19 +40,19 @@ export default function ProductCard({ product, onEdit, onDelete, onView }) {
         )}
       </div>
       
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-medium text-secondary-900 truncate">
+          <h3 className="text-base sm:text-lg font-medium text-secondary-900 truncate pr-2">
             {product.name}
           </h3>
-          <Badge variant="success" size="xs">Active</Badge>
+          <Badge variant="success" size="xs" className="flex-shrink-0">Active</Badge>
         </div>
         
-        <p className="text-sm text-secondary-600 mb-3 line-clamp-2">
+        <p className="text-xs sm:text-sm text-secondary-600 mb-2 sm:mb-3 line-clamp-2">
           {product.specs}
         </p>
         
-        <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm">
           <div>
             <span className="text-secondary-500">MOQ:</span>
             <span className="ml-1 font-medium">{product.moq}</span>
@@ -84,13 +84,13 @@ export default function ProductCard({ product, onEdit, onDelete, onView }) {
           </div>
         )}
         
-        <div className="flex items-center justify-between pt-4 border-t border-secondary-200">
-          <div className="flex items-center text-sm text-secondary-500">
-            <Eye className="w-4 h-4 mr-1" />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-3 sm:pt-4 border-t border-secondary-200 gap-2 sm:gap-0">
+          <div className="flex items-center text-xs sm:text-sm text-secondary-500">
+            <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
             <span>245 views</span>
           </div>
           
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             <Button 
               variant="outline" 
               size="sm"
@@ -98,14 +98,15 @@ export default function ProductCard({ product, onEdit, onDelete, onView }) {
                 e.stopPropagation();
                 onView && onView(product.id);
               }}
+              className="flex-1 sm:flex-initial text-xs px-2 py-1.5"
             >
-              <Eye className="w-4 h-4 mr-1" />
-              View
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
+              <span className="hidden sm:inline">View</span>
             </Button>
-            <Link href={`/products/edit/${product.id}`}>
-              <Button variant="outline" size="sm">
-                <Edit className="w-4 h-4 mr-1" />
-                Edit
+            <Link href={`/products/edit/${product.id}`} className="flex-1 sm:flex-initial">
+              <Button variant="outline" size="sm" className="w-full text-xs px-2 py-1.5">
+                <Edit className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
+                <span className="hidden sm:inline">Edit</span>
               </Button>
             </Link>
             <Button 
@@ -115,9 +116,10 @@ export default function ProductCard({ product, onEdit, onDelete, onView }) {
                 e.stopPropagation();
                 onDelete && onDelete(product.id);
               }}
+              className="flex-1 sm:flex-initial text-xs px-2 py-1.5"
             >
-              <Trash2 className="w-4 h-4 mr-1" />
-              Delete
+              <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Delete</span>
             </Button>
           </div>
         </div>

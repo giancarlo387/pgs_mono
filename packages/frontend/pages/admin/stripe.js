@@ -374,8 +374,10 @@ export default function StripeManagement() {
                     <p className="mt-1 text-sm text-gray-500">Try adjusting your search or filters.</p>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
+                  <>
+                    {/* Desktop Table */}
+                    <div className="hidden lg:block overflow-x-auto">
+                      <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -479,6 +481,73 @@ export default function StripeManagement() {
                       </div>
                     )}
                   </div>
+
+                  {/* Mobile Cards */}
+                  <div className="lg:hidden space-y-4 mt-4">
+                    {accounts.map((account) => (
+                      <Card key={account.id} className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm font-semibold text-gray-900 truncate">{account.name}</h3>
+                            <p className="text-xs text-gray-500 truncate">{account.email}</p>
+                          </div>
+                          {getStatusBadge(account.stripe_onboarding_status)}
+                        </div>
+
+                        <div className="space-y-2 mb-3 pb-3 border-b border-gray-200">
+                          <div>
+                            <p className="text-xs text-gray-500">Stripe Account ID</p>
+                            <p className="text-xs font-mono text-gray-900 break-all">{account.stripe_account_id}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500">Country</p>
+                            <p className="text-sm text-gray-900">{account.stripe_country || 'N/A'}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => router.push(`/admin/stripe/accounts/${account.id}`)}
+                            className="text-xs"
+                          >
+                            <Eye className="h-4 w-4 mr-1" />
+                            View
+                          </Button>
+                        </div>
+                      </Card>
+                    ))}
+
+                    {totalPages > 1 && (
+                      <Card className="p-4">
+                        <div className="flex flex-col gap-3">
+                          <div className="text-sm text-gray-700 text-center">
+                            Page {currentPage} of {totalPages}
+                          </div>
+                          <div className="flex justify-center space-x-2">
+                            <Button
+                              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                              disabled={currentPage === 1}
+                              variant="outline"
+                              size="sm"
+                            >
+                              Previous
+                            </Button>
+                            <Button
+                              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                              disabled={currentPage === totalPages}
+                              variant="outline"
+                              size="sm"
+                            >
+                              Next
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    )}
+                  </div>
+                  </>
                 )}
               </div>
             )}

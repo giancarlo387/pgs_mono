@@ -283,8 +283,8 @@ export default function AgentManagement() {
           </div>
         </Card>
 
-        {/* Agents Table */}
-        <Card>
+        {/* Agents Table - Desktop */}
+        <Card className="hidden lg:block">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -439,6 +439,115 @@ export default function AgentManagement() {
             </div>
           )}
         </Card>
+
+        {/* Agents Cards - Mobile */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <Card className="p-6">
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            </Card>
+          ) : agents.length === 0 ? (
+            <Card className="p-6 text-center text-gray-500">
+              No agents found
+            </Card>
+          ) : (
+            agents.map((agent) => {
+              const statusBadge = getStatusBadge(agent);
+              const companyAgent = agent.company_agent;
+              return (
+                <Card key={agent.id} className="p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                        <span className="text-orange-600 font-semibold text-sm">
+                          {agent.name?.substring(0, 2).toUpperCase() || 'AG'}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-semibold text-gray-900 truncate">{agent.name}</h3>
+                        <p className="text-xs text-gray-500 truncate">{agent.email}</p>
+                      </div>
+                    </div>
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${statusBadge.class}`}>
+                      {statusBadge.text}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 mb-3 pb-3 border-b border-gray-200">
+                    <div>
+                      <p className="text-xs text-gray-500">Company</p>
+                      <p className="text-sm font-medium text-gray-900">{companyAgent?.company?.name || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Role</p>
+                      <p className="text-sm text-gray-900">{companyAgent?.role || 'Agent'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Joined</p>
+                      <p className="text-sm text-gray-900">{new Date(agent.created_at).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => openChangeCompanyModal(agent)}
+                      className="p-2 text-purple-600 hover:text-purple-900 hover:bg-purple-50 rounded-lg"
+                      title="Change Company"
+                    >
+                      <RefreshCw className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => alert('View details coming soon')}
+                      className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg"
+                      title="View Details"
+                    >
+                      <Eye className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(agent.id)}
+                      className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </div>
+                </Card>
+              );
+            })
+          )}
+
+          {pagination && (
+            <Card className="p-4">
+              <div className="flex flex-col gap-3">
+                <div className="text-sm text-gray-700 text-center">
+                  Showing <span className="font-medium">{pagination.from || 0}</span> to{' '}
+                  <span className="font-medium">{pagination.to || 0}</span> of{' '}
+                  <span className="font-medium">{pagination.total || 0}</span> results
+                </div>
+                <div className="flex justify-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === pagination.last_page}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          )}
+        </div>
 
         {/* Create Invitation Modal */}
         {showCreateModal && (

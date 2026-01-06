@@ -302,7 +302,8 @@ export default function ProductManagement() {
           </div>
         </Card>
 
-        <Card>
+        {/* Desktop Table */}
+        <Card className="hidden lg:block">
           <div className="overflow-x-auto">
             {loading ? (
               <div className="text-center py-12">
@@ -472,6 +473,127 @@ export default function ProductManagement() {
             )}
           </div>
         </Card>
+
+        {/* Mobile Cards */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <Card className="p-6">
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            </Card>
+          ) : products.length === 0 ? (
+            <Card className="p-6 text-center text-gray-500">
+              <Package className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
+            </Card>
+          ) : (
+            <>
+              {products.map((product) => (
+                <Card key={product.id} className="p-4">
+                  <div className="flex items-start space-x-3 mb-3">
+                    {product.has_image && getProductImage(product) ? (
+                      <img
+                        src={getProductImage(product)}
+                        alt={product.name}
+                        className="h-16 w-16 rounded object-cover flex-shrink-0"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div
+                      className="h-16 w-16 rounded bg-gray-200 flex items-center justify-center flex-shrink-0"
+                      style={{ display: product.has_image && getProductImage(product) ? 'none' : 'flex' }}
+                    >
+                      <ShoppingCart className="h-8 w-8 text-gray-500" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold text-gray-900 truncate">{product.name}</h3>
+                      <p className="text-xs text-gray-500">ID: {product.id}</p>
+                      <p className="text-xs text-gray-600 mt-1">{product.company?.name || 'N/A'}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 mb-3 pb-3 border-b border-gray-200">
+                    <div>
+                      <p className="text-xs text-gray-500">Price</p>
+                      <p className="text-sm font-bold text-gray-900">${parseFloat(product.price).toFixed(2)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Stock</p>
+                      <p className="text-sm font-medium text-gray-900">{product.stock_quantity} {product.unit || 'units'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Category</p>
+                      <p className="text-sm text-gray-900">{product.category || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Status</p>
+                      <div className="mt-1">
+                        {product.active ? (
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                        ) : (
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">Inactive</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {getStockStatusBadge(product)}
+                  </div>
+
+                  <div className="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-gray-200">
+                    <button
+                      onClick={() => handleToggleStatus(product.id)}
+                      className="p-2 text-primary-600 hover:text-primary-900 hover:bg-primary-50 rounded-lg"
+                      title={product.active ? 'Deactivate' : 'Activate'}
+                    >
+                      {product.active ? <ToggleRight className="h-6 w-6" /> : <ToggleLeft className="h-6 w-6" />}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-6 w-6" />
+                    </button>
+                  </div>
+                </Card>
+              ))}
+
+              {totalPages > 1 && (
+                <Card className="p-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="text-sm text-gray-700 text-center">
+                      Page {currentPage} of {totalPages}
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

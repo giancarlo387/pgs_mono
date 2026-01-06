@@ -227,7 +227,8 @@ export default function PaymentLedger() {
           </div>
         </Card>
 
-        <Card>
+        {/* Desktop Table */}
+        <Card className="hidden lg:block">
           <div className="overflow-x-auto">
             {loading ? (
               <div className="text-center py-12">
@@ -366,6 +367,98 @@ export default function PaymentLedger() {
             )}
           </div>
         </Card>
+
+        {/* Mobile Cards */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <Card className="p-6">
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            </Card>
+          ) : payments.length === 0 ? (
+            <Card className="p-6 text-center text-gray-500">
+              <CreditCard className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No payments found</h3>
+            </Card>
+          ) : (
+            <>
+              {payments.map((payment) => (
+                <Card key={payment.id} className="p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900">{payment.transaction_id || `PAY-${payment.id}`}</h3>
+                      <p className="text-xs text-gray-500 mt-1">Order #{payment.order?.order_number || payment.order_id}</p>
+                    </div>
+                    <span className="text-lg font-bold text-gray-900">${parseFloat(payment.amount || 0).toFixed(2)}</span>
+                  </div>
+
+                  <div className="space-y-2 mb-3 pb-3 border-b border-gray-200">
+                    <div>
+                      <p className="text-xs text-gray-500">Customer</p>
+                      <p className="text-sm font-medium text-gray-900">{payment.customer_name || 'N/A'}</p>
+                      <p className="text-xs text-gray-600">{payment.customer_email || ''}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <p className="text-xs text-gray-500">Platform Fee</p>
+                        <p className="text-sm font-medium text-gray-900">${parseFloat(payment.platform_fee || 0).toFixed(2)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Date</p>
+                        <p className="text-sm text-gray-900">{new Date(payment.created_at).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    {payment.status === 'completed' ? (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                    ) : payment.status === 'pending' ? (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                    ) : (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Failed</span>
+                    )}
+                    <button
+                      className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg"
+                      title="View Details"
+                    >
+                      <Eye className="h-5 w-5" />
+                    </button>
+                  </div>
+                </Card>
+              ))}
+
+              {totalPages > 1 && (
+                <Card className="p-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="text-sm text-gray-700 text-center">
+                      Page {currentPage} of {totalPages}
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

@@ -392,7 +392,7 @@ export default function ProminentSearchBar({ className = "" }) {
 
   return (
     <div className={`bg-gradient-to-r from-primary-50 to-primary-100 py-4 md:py-6 lg:py-8 ${className}`}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Search Section Title */}
         <div className="text-center mb-4 md:mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-secondary-900 mb-2">
@@ -404,7 +404,7 @@ export default function ProminentSearchBar({ className = "" }) {
         </div>
 
         {/* Main Search Bar - Alibaba Style */}
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto">
           <form onSubmit={handleSearch} className="relative">
             <div className="flex bg-white rounded-md md:rounded-lg shadow-medium border border-secondary-200 overflow-hidden">
               {/* Category Dropdown */}

@@ -249,8 +249,8 @@ export default function UserManagement() {
           </div>
         </Card>
 
-        {/* Users Table */}
-        <Card>
+        {/* Users Table - Desktop */}
+        <Card className="hidden lg:block">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -383,6 +383,115 @@ export default function UserManagement() {
             </div>
           )}
         </Card>
+
+        {/* Users Cards - Mobile */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <Card className="p-6">
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            </Card>
+          ) : users.length === 0 ? (
+            <Card className="p-6 text-center text-gray-500">
+              No users found
+            </Card>
+          ) : (
+            users.map((user) => (
+              <Card key={user.id} className="p-4">
+                {/* User Header */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-600 font-semibold text-sm">
+                        {user.name?.substring(0, 2).toUpperCase() || 'U'}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold text-gray-900 truncate">{user.name}</h3>
+                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                    </div>
+                  </div>
+                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getUserTypeBadge(user.usertype)}`}>
+                    {user.usertype?.charAt(0).toUpperCase() + user.usertype?.slice(1)}
+                  </span>
+                </div>
+
+                {/* User Info */}
+                <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                  <div className="flex items-center gap-4">
+                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                      Active
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      Joined {new Date(user.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-gray-200">
+                  {user.usertype !== 'admin' && (
+                    <button
+                      onClick={() => handleImpersonateClick(user)}
+                      className="p-2 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg"
+                      title="Login As User"
+                      disabled={impersonating}
+                    >
+                      <LogIn className="h-5 w-5" />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => toast('Edit functionality will be available soon', { icon: 'ℹ️' })}
+                    className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg"
+                    title="Edit"
+                  >
+                    <Edit className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(user)}
+                    className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg"
+                    title="Delete"
+                    disabled={user.usertype === 'admin'}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </div>
+              </Card>
+            ))
+          )}
+
+          {/* Mobile Pagination */}
+          {pagination && (
+            <Card className="p-4">
+              <div className="flex flex-col gap-3">
+                <div className="text-sm text-gray-700 text-center">
+                  Showing <span className="font-medium">{pagination.from || 0}</span> to{' '}
+                  <span className="font-medium">{pagination.to || 0}</span> of{' '}
+                  <span className="font-medium">{pagination.total || 0}</span> results
+                </div>
+                <div className="flex justify-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === pagination.last_page}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          )}
+        </div>
       </div>
 
       {/* Delete Confirmation Dialog */}

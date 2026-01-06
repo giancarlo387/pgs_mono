@@ -136,41 +136,46 @@ export default function Layout({ children }) {
     router.pathname.startsWith('/buyer/products') && router.pathname === '/buyer/products' // Products listing (not detail)
   );
 
-  // Layout for buyer dashboard (home) - only global topnav, no sidenav
-  // Works for both authenticated and unauthenticated users
-  // Includes prominent Alibaba-style search bar when appropriate
-  // Also applies to search page, product detail pages, and supplier detail pages for better space utilization
-  if (isBuyerDashboard || 
-      (isUnauthenticatedBuyerPage && router.pathname === '/buyer') ||
-      router.pathname === '/buyer/search' ||
+  // Layout for search page, product detail pages, and supplier detail pages - no sidebar for better space
+  if (router.pathname === '/buyer/search' ||
       router.pathname.startsWith('/buyer/products/') ||
       router.pathname.startsWith('/buyer/suppliers/')) {
     return (
       <CartProvider>
         <div className="min-h-screen bg-secondary-50">
-          {isImpersonating && <ImpersonationBanner />}
-          <BuyerGlobalTopNav />
-          {/* Prominent Search Bar - Alibaba Style (only on homepage) */}
+          <div className="sticky top-0 z-50">
+            {isImpersonating && <ImpersonationBanner />}
+            <BuyerGlobalTopNav onMenuToggle={toggleSidebar} isSidebarOpen={sidebarOpen} />
+          </div>
+          {/* Prominent Search Bar - Alibaba Style */}
           {shouldShowProminentSearch && <ProminentSearchBar />}
-          <main className="p-3 sm:p-4 md:p-6 lg:p-8">
-            <div className="max-w-7xl mx-auto">
-              {children}
+          <div className="flex">
+            <BuyerSideBar isOpen={sidebarOpen} onClose={closeSidebar} />
+            <div className="flex-1 flex flex-col min-w-0">
+              <main className="flex-1 p-3 sm:p-4 md:p-6 lg:p-8">
+                <div className="w-full">
+                  {children}
+                </div>
+              </main>
             </div>
-          </main>
+          </div>
           <Footer />
         </div>
       </CartProvider>
     );
   }
 
-  // Layout for buyer messages page - no sidebar, full width
+  // Layout for buyer messages page - full height messaging interface
   if (router.pathname === '/buyer/messages') {
     return (
       <CartProvider>
-        <div className="min-h-screen bg-secondary-50">
-          {isImpersonating && <ImpersonationBanner />}
-          <BuyerGlobalTopNav />
-          <main className="flex-1">
+        <div className="min-h-screen bg-secondary-50 flex flex-col">
+          <div className="sticky top-0 z-50">
+            {isImpersonating && <ImpersonationBanner />}
+            <BuyerGlobalTopNav onMenuToggle={toggleSidebar} isSidebarOpen={sidebarOpen} />
+          </div>
+          <BuyerSideBar isOpen={sidebarOpen} onClose={closeSidebar} />
+          <main className="flex-1 overflow-hidden">
             {children}
           </main>
         </div>
@@ -185,15 +190,17 @@ export default function Layout({ children }) {
     return (
       <CartProvider>
         <div className="min-h-screen bg-secondary-50">
-          {isImpersonating && <ImpersonationBanner />}
-          <BuyerGlobalTopNav />
+          <div className="sticky top-0 z-50">
+            {isImpersonating && <ImpersonationBanner />}
+            <BuyerGlobalTopNav onMenuToggle={toggleSidebar} isSidebarOpen={sidebarOpen} />
+          </div>
           {/* Prominent Search Bar - Alibaba Style (on main listing pages) */}
           {shouldShowProminentSearch && <ProminentSearchBar />}
           <div className="flex">
             <BuyerSideBar isOpen={sidebarOpen} onClose={closeSidebar} />
-            <div className="flex-1 flex flex-col lg:ml-0">
+            <div className="flex-1 flex flex-col min-w-0">
               <main className="flex-1 p-3 sm:p-4 md:p-6 lg:p-8">
-                <div className="max-w-7xl mx-auto">
+                <div className="w-full">
                   {children}
                 </div>
               </main>

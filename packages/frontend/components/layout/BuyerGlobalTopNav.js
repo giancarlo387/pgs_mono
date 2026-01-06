@@ -19,7 +19,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 import apiService from '../../lib/api';
 
-export default function BuyerGlobalTopNav() {
+export default function BuyerGlobalTopNav({ onMenuToggle, isSidebarOpen }) {
   const router = useRouter();
   const { user, logout, isAuthenticated } = useAuth();
   const { cartCount } = useCart();
@@ -90,11 +90,29 @@ export default function BuyerGlobalTopNav() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-secondary-200 sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-white shadow-sm border-b border-secondary-200">
+      <div className="w-full px-3 sm:px-4 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Left - Logo */}
-          <div className="flex items-center">
+          {/* Left - Menu Button (Mobile/Tablet) + Logo */}
+          <div className="flex items-center space-x-3">
+            {/* Hamburger Menu Button - Only visible on mobile/tablet */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Hamburger clicked, onMenuToggle:', onMenuToggle);
+                if (onMenuToggle) {
+                  onMenuToggle();
+                }
+              }}
+              className="lg:hidden p-2 rounded-lg text-secondary-600 hover:bg-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500 relative z-50"
+              aria-label="Toggle menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            
             <Link href="/buyer" className="flex items-center space-x-3">
               <img src="/pgs2.png" className="h-8 w-auto" alt="Pinoy Global Supply" />
               <span className="text-xl font-bold text-secondary-900 hidden sm:block">
@@ -104,12 +122,12 @@ export default function BuyerGlobalTopNav() {
           </div>
 
           {/* Center - Spacer (search bar moved to prominent section below) */}
-          <div className="flex-1"></div>
+          <div className="flex-1 min-w-0"></div>
 
           {/* Right - Actions and User Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
             {/* Language Selector */}
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <button
                 onClick={() => setShowLanguageMenu(!showLanguageMenu)}
                 className="flex items-center space-x-1 px-2 py-1 text-sm text-secondary-600 hover:text-secondary-900 rounded"
@@ -138,7 +156,7 @@ export default function BuyerGlobalTopNav() {
             </div>
 
             {/* Country Selector */}
-            <div className="relative">
+            <div className="relative hidden md:block">
               <button
                 onClick={() => setShowCountryMenu(!showCountryMenu)}
                 className="flex items-center space-x-1 px-2 py-1 text-sm text-secondary-600 hover:text-secondary-900 rounded"
@@ -171,9 +189,9 @@ export default function BuyerGlobalTopNav() {
             {isAuthenticated ? (
               <>
                 {/* Messages - Authenticated users only */}
-                <Link href="/buyer/messages">
-                  <button className="relative p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
-                    <MessageSquare className="w-5 h-5" />
+                <Link href="/buyer/messages" className="hidden sm:block">
+                  <button className="relative p-1 sm:p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
+                    <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
                     {messageCount > 0 && (
                       <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                         {messageCount > 9 ? '9+' : messageCount}
@@ -183,9 +201,9 @@ export default function BuyerGlobalTopNav() {
                 </Link>
 
                 {/* Orders - Authenticated users only */}
-                <Link href="/buyer/orders">
-                  <button className="relative p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
-                    <Package className="w-5 h-5" />
+                <Link href="/buyer/orders" className="hidden sm:block">
+                  <button className="relative p-1 sm:p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
+                    <Package className="w-4 h-4 sm:w-5 sm:h-5" />
                     {orderCount > 0 && (
                       <span className="absolute -top-1 -right-1 h-4 w-4 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
                         {orderCount > 9 ? '9+' : orderCount}
@@ -196,8 +214,8 @@ export default function BuyerGlobalTopNav() {
 
                 {/* Cart - Authenticated users only */}
                 <Link href="/buyer/cart">
-                  <button className="relative p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
-                    <ShoppingCart className="w-5 h-5" />
+                  <button className="relative p-1 sm:p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg">
+                    <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
                     {cartCount > 0 && (
                       <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
                         {cartCount > 9 ? '9+' : cartCount}
@@ -210,10 +228,10 @@ export default function BuyerGlobalTopNav() {
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center space-x-2 p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg"
+                    className="flex items-center space-x-1 p-1 sm:p-2 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100 rounded-lg"
                   >
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium text-blue-600">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span className="text-xs sm:text-sm font-medium text-blue-600">
                         {user?.name?.charAt(0)?.toUpperCase() || 'B'}
                       </span>
                     </div>
