@@ -54,24 +54,24 @@ export default function ImpersonationBanner() {
 
   return (
     <>
-      <div className="bg-yellow-500 text-white px-4 py-3 shadow-lg">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <AlertCircle className="h-5 w-5" />
-            <div>
-              <p className="font-semibold">Impersonation Mode Active</p>
-              <p className="text-sm text-yellow-100">
-                You are viewing this portal as another user. Admin: {impersonatorName}
+      <div className="bg-yellow-500 text-white px-2 py-1.5 shadow-sm overflow-hidden sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5">
+          <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+            <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <p className="text-xs font-semibold leading-none truncate">Impersonation Mode Active</p>
+              <p className="text-xs text-yellow-100 leading-none truncate mt-0.5">
+                Admin: {impersonatorName}
               </p>
             </div>
           </div>
           <button
             onClick={handleExitClick}
             disabled={loading}
-            className="flex items-center gap-2 bg-white text-yellow-600 px-4 py-2 rounded-lg font-medium hover:bg-yellow-50 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1 bg-white text-yellow-600 px-2 py-1 rounded text-xs font-medium hover:bg-yellow-50 transition-colors disabled:opacity-50 whitespace-nowrap flex-shrink-0"
           >
-            <LogOut className="h-4 w-4" />
-            {loading ? 'Exiting...' : 'Exit Impersonation'}
+            <LogOut className="h-3 w-3" />
+            <span className="hidden xs:inline sm:inline">{loading ? 'Exit...' : 'Exit'}</span>
           </button>
         </div>
       </div>

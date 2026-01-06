@@ -303,21 +303,21 @@ export default function BuyerProfileSettings() {
         <title>Profile Settings - Pinoy Global Supply</title>
       </Head>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-secondary-900">Profile Settings</h1>
-          <p className="mt-2 text-secondary-600">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-secondary-900">Profile Settings</h1>
+          <p className="mt-1 sm:mt-2 text-sm sm:text-base text-secondary-600">
             Manage your personal information and account settings
           </p>
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-secondary-200 mb-6">
-          <nav className="-mb-px flex space-x-8">
+        <div className="border-b border-secondary-200 mb-4 sm:mb-6">
+          <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab('personal')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors ${
                 activeTab === 'personal'
                   ? 'border-primary-600 text-primary-600'
                   : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
@@ -327,7 +327,7 @@ export default function BuyerProfileSettings() {
             </button>
             <button
               onClick={() => setActiveTab('security')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors ${
                 activeTab === 'security'
                   ? 'border-primary-600 text-primary-600'
                   : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
@@ -343,15 +343,15 @@ export default function BuyerProfileSettings() {
           <div className="space-y-6">
             {/* Profile Picture Section */}
             <Card>
-              <div className="p-6">
-                <h2 className="text-lg font-semibold text-secondary-900 mb-4">
+              <div className="p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-secondary-900 mb-3 sm:mb-4">
                   Profile Picture
                 </h2>
                 
-                <div className="flex items-start space-x-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
                   {/* Profile Picture Preview */}
-                  <div className="relative">
-                    <div className="w-32 h-32 rounded-full overflow-hidden bg-secondary-100 border-4 border-white shadow-lg">
+                  <div className="relative mx-auto sm:mx-0">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-secondary-100 border-4 border-white shadow-lg">
                       {profilePicturePreview ? (
                         <img
                           src={profilePicturePreview}
@@ -360,7 +360,7 @@ export default function BuyerProfileSettings() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-400 to-primary-600">
-                          <User className="w-16 h-16 text-white" />
+                          <User className="w-12 h-12 sm:w-16 sm:h-16 text-white" />
                         </div>
                       )}
                     </div>
@@ -368,10 +368,10 @@ export default function BuyerProfileSettings() {
                     {/* Camera Icon Overlay */}
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute bottom-0 right-0 p-2 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-colors"
+                      className="absolute bottom-0 right-0 p-1.5 sm:p-2 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-colors"
                       disabled={uploading}
                     >
-                      <Camera className="w-5 h-5" />
+                      <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
 
@@ -385,9 +385,9 @@ export default function BuyerProfileSettings() {
                       className="hidden"
                     />
 
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3 w-full">
                       <div>
-                        <p className="text-sm font-medium text-secondary-900">
+                        <p className="text-xs sm:text-sm font-medium text-secondary-900">
                           Upload a new profile picture
                         </p>
                         <p className="text-xs text-secondary-500 mt-1">
@@ -462,26 +462,26 @@ export default function BuyerProfileSettings() {
 
             {/* Profile Information Form */}
             <Card>
-              <form onSubmit={handleUpdateProfile} className="p-6">
-                <h2 className="text-lg font-semibold text-secondary-900 mb-6">
+              <form onSubmit={handleUpdateProfile} className="p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-secondary-900 mb-4 sm:mb-6">
                   Personal Information
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {/* Full Name */}
                   <div>
                     <label className="block text-sm font-medium text-secondary-700 mb-2">
                       Full Name *
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <input
                         type="text"
                         name="name"
                         value={profileData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="John Doe"
                       />
                     </div>
@@ -493,14 +493,14 @@ export default function BuyerProfileSettings() {
                       Email Address *
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <input
                         type="email"
                         name="email"
                         value={profileData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -512,13 +512,13 @@ export default function BuyerProfileSettings() {
                       Phone Number
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <input
                         type="tel"
                         name="phone"
                         value={profileData.phone}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="+63 912 345 6789"
                       />
                     </div>
@@ -547,13 +547,13 @@ export default function BuyerProfileSettings() {
                       Company Name
                     </label>
                     <div className="relative">
-                      <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                      <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <input
                         type="text"
                         name="company_name"
                         value={profileData.company_name}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="ABC Corporation"
                       />
                     </div>
@@ -565,13 +565,13 @@ export default function BuyerProfileSettings() {
                       Job Title
                     </label>
                     <div className="relative">
-                      <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                      <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <input
                         type="text"
                         name="job_title"
                         value={profileData.job_title}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="Procurement Manager"
                       />
                     </div>
@@ -583,13 +583,13 @@ export default function BuyerProfileSettings() {
                       Street Address
                     </label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-3 w-5 h-5 text-secondary-400" />
+                      <MapPin className="absolute left-3 top-3 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                       <textarea
                         name="address"
                         value={profileData.address}
                         onChange={handleInputChange}
                         rows="2"
-                        className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         placeholder="123 Main Street, Barangay..."
                       />
                     </div>
@@ -605,7 +605,7 @@ export default function BuyerProfileSettings() {
                       name="city"
                       value={profileData.city}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full px-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Manila"
                     />
                   </div>
@@ -620,7 +620,7 @@ export default function BuyerProfileSettings() {
                       name="state"
                       value={profileData.state}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full px-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Metro Manila"
                     />
                   </div>
@@ -634,7 +634,7 @@ export default function BuyerProfileSettings() {
                       name="country"
                       value={profileData.country}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full px-4 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
                       <option value="Philippines">Philippines</option>
                       <option value="United States">United States</option>
@@ -706,25 +706,25 @@ export default function BuyerProfileSettings() {
         {/* Security Tab */}
         {activeTab === 'security' && (
           <Card>
-            <form onSubmit={handleChangePassword} className="p-6">
-              <h2 className="text-lg font-semibold text-secondary-900 mb-6">
+            <form onSubmit={handleChangePassword} className="p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold text-secondary-900 mb-4 sm:mb-6">
                 Change Password
               </h2>
 
-              <div className="max-w-md space-y-4">
+              <div className="max-w-md space-y-3 sm:space-y-4">
                 {/* Current Password */}
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
                     Current Password *
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                     <input
                       type={showPasswords.current ? 'text' : 'password'}
                       value={passwordData.current_password}
                       onChange={(e) => setPasswordData(prev => ({ ...prev, current_password: e.target.value }))}
                       required
-                      className="w-full pl-10 pr-12 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full pl-9 sm:pl-10 pr-10 sm:pr-12 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Enter current password"
                     />
                     <button
@@ -732,7 +732,7 @@ export default function BuyerProfileSettings() {
                       onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600"
                     >
-                      {showPasswords.current ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPasswords.current ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                     </button>
                   </div>
                 </div>
@@ -743,14 +743,14 @@ export default function BuyerProfileSettings() {
                     New Password *
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                     <input
                       type={showPasswords.new ? 'text' : 'password'}
                       value={passwordData.new_password}
                       onChange={(e) => setPasswordData(prev => ({ ...prev, new_password: e.target.value }))}
                       required
                       minLength="8"
-                      className="w-full pl-10 pr-12 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full pl-9 sm:pl-10 pr-10 sm:pr-12 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Enter new password"
                     />
                     <button
@@ -758,7 +758,7 @@ export default function BuyerProfileSettings() {
                       onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600"
                     >
-                      {showPasswords.new ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPasswords.new ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                     </button>
                   </div>
                   <p className="mt-1 text-xs text-secondary-500">
@@ -772,14 +772,14 @@ export default function BuyerProfileSettings() {
                     Confirm New Password *
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary-400" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
                     <input
                       type={showPasswords.confirm ? 'text' : 'password'}
                       value={passwordData.new_password_confirmation}
                       onChange={(e) => setPasswordData(prev => ({ ...prev, new_password_confirmation: e.target.value }))}
                       required
                       minLength="8"
-                      className="w-full pl-10 pr-12 py-2 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      className="w-full pl-9 sm:pl-10 pr-10 sm:pr-12 py-2 text-sm sm:text-base border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Confirm new password"
                     />
                     <button
@@ -787,7 +787,7 @@ export default function BuyerProfileSettings() {
                       onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600"
                     >
-                      {showPasswords.confirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPasswords.confirm ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                     </button>
                   </div>
                 </div>

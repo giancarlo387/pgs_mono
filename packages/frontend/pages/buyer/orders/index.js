@@ -397,20 +397,23 @@ export default function Orders() {
 
         {/* Filters */}
         <Card className="p-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search orders..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  className="pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                />
-              </div>
-              
-              <div className="flex space-x-2">
+          <div className="flex flex-col space-y-4">
+            {/* Search Bar */}
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search orders..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
+            
+            {/* Status Filters - Horizontal scrolling on mobile */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <div className="flex space-x-2 min-w-max">
                 <button
                   onClick={() => handleStatusFilter('all')}
                   className={`px-3 py-2 text-sm font-medium rounded-lg ${
@@ -471,20 +474,22 @@ export default function Orders() {
                 >
                   Delivered
                 </button>
+                </div>
               </div>
-            </div>
-
-            <div className="flex space-x-2">
-              <select
-                value={dateFilter}
-                onChange={(e) => handleDateFilter(e.target.value)}
-                className="px-3 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              >
-                <option value="all">All Time</option>
-                <option value="today">Today</option>
-                <option value="week">Last 7 Days</option>
-                <option value="month">Last 30 Days</option>
-              </select>
+              
+              {/* Date Filter */}
+              <div className="w-full sm:w-auto">
+                <select
+                  value={dateFilter}
+                  onChange={(e) => handleDateFilter(e.target.value)}
+                  className="w-full sm:w-auto px-3 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                >
+                  <option value="all">All Time</option>
+                  <option value="today">Today</option>
+                  <option value="week">Last 7 Days</option>
+                  <option value="month">Last 30 Days</option>
+                </select>
+              </div>
             </div>
           </div>
         </Card>
@@ -544,48 +549,48 @@ export default function Orders() {
           <>
             <div className="space-y-4">
               {orders.map((order) => (
-                <Card key={order.id} className="p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between space-y-4 lg:space-y-0">
+                <Card key={order.id} className="p-4 sm:p-6">
+                  <div className="flex flex-col space-y-4">
                     {/* Order Info */}
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <h3 className="text-lg font-medium text-secondary-900">
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                        <h3 className="text-base sm:text-lg font-medium text-secondary-900">
                           Order {order.id}
                         </h3>
                         <div className={`flex items-center space-x-1 px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
                           {getStatusIcon(order.status)}
-                          <span>{order.status.replace('_', ' ')}</span>
+                          <span className="whitespace-nowrap">{order.status.replace('_', ' ')}</span>
                         </div>
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getPaymentStatusColor(order.payment_status)}`}>
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${getPaymentStatusColor(order.payment_status)}`}>
                           {order.payment_status}
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                         <div>
-                          <p className="text-sm text-secondary-600">Supplier</p>
-                          <p className="font-medium text-secondary-900">{order.supplier.name}</p>
-                          <p className="text-sm text-secondary-600">{order.supplier.contact_person}</p>
+                          <p className="text-xs sm:text-sm text-secondary-600">Supplier</p>
+                          <p className="text-sm sm:text-base font-medium text-secondary-900">{order.supplier.name}</p>
+                          <p className="text-xs sm:text-sm text-secondary-600">{order.supplier.contact_person}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-secondary-600">Order Date</p>
-                          <p className="font-medium text-secondary-900">{formatDate(order.order_date)}</p>
-                          <p className="text-sm text-secondary-600">Expected: {formatDate(order.expected_delivery)}</p>
+                          <p className="text-xs sm:text-sm text-secondary-600">Order Date</p>
+                          <p className="text-sm sm:text-base font-medium text-secondary-900">{formatDate(order.order_date)}</p>
+                          <p className="text-xs sm:text-sm text-secondary-600">Expected: {formatDate(order.expected_delivery)}</p>
                         </div>
                       </div>
 
                       {/* Items */}
                       <div className="mb-4">
-                        <p className="text-sm text-secondary-600 mb-2">Items:</p>
+                        <p className="text-xs sm:text-sm text-secondary-600 mb-2">Items:</p>
                         <div className="space-y-2">
                           {order.items.map((item) => (
-                            <div key={item.id} className="flex items-center gap-3 p-3 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors">
+                            <div key={item.id} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-secondary-50 rounded-lg hover:bg-secondary-100 transition-colors">
                               {/* Product Image */}
                               <div 
-                                className="w-16 h-16 flex-shrink-0 bg-secondary-200 rounded-md flex items-center justify-center overflow-hidden cursor-pointer"
+                                className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 bg-secondary-200 rounded-md flex items-center justify-center overflow-hidden cursor-pointer"
                                 onClick={() => item.product_id && (window.location.href = `/buyer/products/${item.product_id}`)}
                               >
-                                <Package className="w-8 h-8 text-secondary-400" />
+                                <Package className="w-6 h-6 sm:w-8 sm:h-8 text-secondary-400" />
                               </div>
                               
                               {/* Product Info */}
@@ -593,20 +598,20 @@ export default function Orders() {
                                 {item.product_id ? (
                                   <a 
                                     href={`/buyer/products/${item.product_id}`}
-                                    className="font-medium text-secondary-900 hover:text-primary-600 cursor-pointer block truncate"
+                                    className="text-sm sm:text-base font-medium text-secondary-900 hover:text-primary-600 cursor-pointer block truncate"
                                   >
                                     {item.name}
                                   </a>
                                 ) : (
-                                  <p className="font-medium text-secondary-900 truncate">{item.name}</p>
+                                  <p className="text-sm sm:text-base font-medium text-secondary-900 truncate">{item.name}</p>
                                 )}
-                                <p className="text-sm text-secondary-600">
+                                <p className="text-xs sm:text-sm text-secondary-600">
                                   {item.quantity.toLocaleString()} {item.unit} × {formatCurrency(item.unit_price)}
                                 </p>
                               </div>
                               
                               {/* Price */}
-                              <p className="font-medium text-secondary-900 flex-shrink-0">
+                              <p className="text-sm sm:text-base font-medium text-secondary-900 flex-shrink-0">
                                 {formatCurrency(item.total_price)}
                               </p>
                             </div>
@@ -615,7 +620,7 @@ export default function Orders() {
                       </div>
 
                       {/* Delivery Info */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
                         <div>
                           <p className="text-secondary-600">Delivery Address</p>
                           <p className="text-secondary-900">{order.delivery_address}</p>
@@ -623,7 +628,7 @@ export default function Orders() {
                         {order.tracking_number && (
                           <div>
                             <p className="text-secondary-600">Tracking Number</p>
-                            <p className="text-secondary-900 font-mono">{order.tracking_number}</p>
+                            <p className="text-secondary-900 font-mono text-xs sm:text-sm">{order.tracking_number}</p>
                           </div>
                         )}
                       </div>
@@ -698,28 +703,30 @@ export default function Orders() {
                     </div>
 
                     {/* Order Summary & Actions */}
-                    <div className="lg:w-64 lg:ml-6">
-                      <div className="bg-secondary-50 rounded-lg p-4 mb-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-secondary-600">Total Amount</span>
-                          <span className="text-lg font-bold text-secondary-900">
+                    <div className="w-full">
+                      {/* Total Amount Summary - Full width on mobile, prominent display */}
+                      <div className="bg-secondary-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs sm:text-sm text-secondary-600">Total Amount</span>
+                          <span className="text-base sm:text-lg font-bold text-secondary-900">
                             {formatCurrency(order.total_amount)}
                           </span>
                         </div>
-                        <p className="text-xs text-secondary-600">{order.payment_terms}</p>
+                        <p className="text-xs text-secondary-600 mt-1">{order.payment_terms}</p>
                       </div>
 
-                      <div className="space-y-2">
+                      {/* Action Buttons - Grid layout for mobile, better organization */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2">
                         {/* Confirm Receipt Button - Only show for shipped but not confirmed orders */}
                         {(order.status === 'shipped' || order.status === 'delivered') && !order.is_confirmed && (
                           <Button 
                             size="sm" 
-                            className="w-full"
+                            className="w-full col-span-2 sm:col-span-3 lg:col-span-2 xl:col-span-3"
                             onClick={() => handleConfirmReceipt(order.id)}
                             disabled={confirmingOrderId === order.id}
                           >
-                            <ThumbsUp className="w-4 h-4 mr-2" />
-                            {confirmingOrderId === order.id ? 'Confirming...' : 'Confirm Receipt'}
+                            <ThumbsUp className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm">{confirmingOrderId === order.id ? 'Confirming...' : 'Confirm Receipt'}</span>
                           </Button>
                         )}
 
@@ -727,11 +734,11 @@ export default function Orders() {
                         {order.is_confirmed && (!order.reviews || order.reviews.length === 0) && (
                           <Button 
                             size="sm" 
-                            className="w-full"
+                            className="w-full col-span-2 sm:col-span-3 lg:col-span-2 xl:col-span-3"
                             onClick={() => handleOpenReview(order)}
                           >
-                            <Star className="w-4 h-4 mr-2" />
-                            Leave Review
+                            <Star className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm">Leave Review</span>
                           </Button>
                         )}
 
@@ -742,8 +749,9 @@ export default function Orders() {
                             className="w-full"
                             onClick={() => window.location.href = `/buyer/products/${order.product_id}`}
                           >
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Details
+                            <Eye className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm hidden sm:inline">View Details</span>
+                            <span className="text-xs sm:hidden">Details</span>
                           </Button>
                         ) : (
                           <Button 
@@ -753,22 +761,24 @@ export default function Orders() {
                             disabled
                             title="Product information not available"
                           >
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Details
+                            <Eye className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm hidden sm:inline">View Details</span>
+                            <span className="text-xs sm:hidden">Details</span>
                           </Button>
                         )}
                         
                         {(order.status === 'delivered' || order.is_confirmed) && (
                           <Button variant="outline" size="sm" className="w-full">
-                            <Download className="w-4 h-4 mr-2" />
-                            Download Invoice
+                            <Download className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm hidden sm:inline">Invoice</span>
+                            <span className="text-xs sm:hidden">Invoice</span>
                           </Button>
                         )}
                         
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="w-full"
+                          className="w-full col-span-2 sm:col-span-1"
                           onClick={() => {
                             router.push({
                               pathname: '/buyer/messages',
@@ -779,14 +789,15 @@ export default function Orders() {
                             });
                           }}
                         >
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Contact Supplier
+                          <MessageSquare className="w-4 h-4 mr-1 sm:mr-2" />
+                          <span className="text-xs sm:text-sm">Contact</span>
                         </Button>
 
                         {order.tracking_number && (
                           <Button variant="outline" size="sm" className="w-full">
-                            <Truck className="w-4 h-4 mr-2" />
-                            Track Shipment
+                            <Truck className="w-4 h-4 mr-1 sm:mr-2" />
+                            <span className="text-xs sm:text-sm hidden sm:inline">Track</span>
+                            <span className="text-xs sm:hidden">Track</span>
                           </Button>
                         )}
                       </div>

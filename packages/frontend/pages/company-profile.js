@@ -370,38 +370,39 @@ export default function CompanyProfile() {
         <title>Company Profile - PSG</title>
       </Head>
 
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 px-3 sm:px-4 md:px-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-secondary-900">Company Profile</h1>
-            <p className="mt-1 text-sm text-secondary-600">
+            <h1 className="text-xl sm:text-2xl font-bold text-secondary-900">Company Profile</h1>
+            <p className="mt-1 text-xs sm:text-sm text-secondary-600">
               Manage your company information and settings
             </p>
           </div>
           
           {!isEditing ? (
-            <Button onClick={() => setIsEditing(true)} className="flex items-center">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit Profile
+            <Button onClick={() => setIsEditing(true)} className="flex items-center text-sm sm:text-base px-3 sm:px-4 py-2">
+              <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              <span className="hidden sm:inline">Edit Profile</span>
+              <span className="sm:hidden">Edit</span>
             </Button>
           ) : (
-            <div className="flex space-x-2">
+            <div className="flex gap-2">
               <Button 
                 onClick={handleSave} 
                 disabled={isSaving}
-                className="flex items-center"
+                className="flex items-center text-sm px-3 py-2"
               >
-                <Save className="w-4 h-4 mr-2" />
-                {isSaving ? 'Saving...' : 'Save Changes'}
+                <Save className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                {isSaving ? 'Saving...' : <><span className="hidden sm:inline">Save Changes</span><span className="sm:hidden">Save</span></>}
               </Button>
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
-                className="flex items-center"
+                className="flex items-center text-sm px-3 py-2"
               >
-                <X className="w-4 h-4 mr-2" />
-                Cancel
+                <X className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Cancel</span>
               </Button>
             </div>
           )}
@@ -409,23 +410,23 @@ export default function CompanyProfile() {
 
         {/* Error Message */}
         {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <div className="text-sm text-red-700">{error}</div>
+          <div className="rounded-md bg-red-50 p-3 sm:p-4">
+            <div className="text-xs sm:text-sm text-red-700">{error}</div>
           </div>
         )}
 
         {/* Company Logo */}
         <Card>
-          <div className="p-6">
-            <h3 className="text-lg font-medium text-secondary-900 mb-6">
+          <div className="p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-secondary-900 mb-4 sm:mb-6">
               Company Logo
             </h3>
             
             {/* Logo Display */}
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               {company.logo ? (
                 <div className="relative inline-block">
-                  <div className="w-32 h-32 rounded-lg overflow-hidden bg-white border-2 border-secondary-200 p-2">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg overflow-hidden bg-white border-2 border-secondary-200 p-2">
                     <img
                       src={company.logo.startsWith('http') ? company.logo : `${process.env.NEXT_PUBLIC_STORAGE_URL || '/storage'}/${company.logo}`}
                       alt="Company Logo"
@@ -458,7 +459,7 @@ export default function CompanyProfile() {
 
             {/* Logo Upload */}
             {isEditing && (
-              <div className="border-t pt-6">
+              <div className="border-t pt-4 sm:pt-6">
                 <FileUpload
                   key={`logo-upload-${isEditing}`}
                   label={company.logo ? "Replace Logo" : "Upload Logo"}
@@ -477,16 +478,16 @@ export default function CompanyProfile() {
 
         {/* Company Banner */}
         <Card>
-          <div className="p-6">
-            <h3 className="text-lg font-medium text-secondary-900 mb-6">
+          <div className="p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-secondary-900 mb-4 sm:mb-6">
               Company Banner
             </h3>
             
             {/* Banner Display */}
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               {company.company_banner ? (
                 <div className="relative">
-                  <div className="w-full h-48 md:h-64 rounded-lg overflow-hidden bg-secondary-100">
+                  <div className="w-full h-40 sm:h-48 md:h-64 rounded-lg overflow-hidden bg-secondary-100">
                     <img
                       src={`${process.env.NEXT_PUBLIC_STORAGE_URL || '/storage'}/${company.company_banner}`}
                       alt="Company Banner"
@@ -500,20 +501,20 @@ export default function CompanyProfile() {
                         size="sm"
                         onClick={handleBannerDelete}
                         disabled={isSaving}
-                        className="bg-white/90 hover:bg-white text-red-600 border-red-200 hover:border-red-300"
+                        className="bg-white/90 hover:bg-white text-red-600 border-red-200 hover:border-red-300 text-xs sm:text-sm px-2 sm:px-3 py-1"
                       >
-                        <X className="w-4 h-4 mr-1" />
-                        Remove
+                        <X className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-1" />
+                        <span className="hidden sm:inline">Remove</span>
                       </Button>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="w-full h-48 md:h-64 rounded-lg border-2 border-dashed border-secondary-300 bg-secondary-50 flex items-center justify-center">
-                  <div className="text-center">
-                    <Camera className="mx-auto h-12 w-12 text-secondary-400" />
-                    <h3 className="mt-2 text-sm font-medium text-secondary-900">No banner image</h3>
-                    <p className="mt-1 text-sm text-secondary-500">
+                <div className="w-full h-40 sm:h-48 md:h-64 rounded-lg border-2 border-dashed border-secondary-300 bg-secondary-50 flex items-center justify-center">
+                  <div className="text-center px-4">
+                    <Camera className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-secondary-400" />
+                    <h3 className="mt-2 text-xs sm:text-sm font-medium text-secondary-900">No banner image</h3>
+                    <p className="mt-1 text-xs sm:text-sm text-secondary-500">
                       Upload a banner image to showcase your company
                     </p>
                   </div>
@@ -523,7 +524,7 @@ export default function CompanyProfile() {
 
             {/* Banner Upload */}
             {isEditing && (
-              <div className="border-t pt-6">
+              <div className="border-t pt-4 sm:pt-6">
                 <FileUpload
                   key={`banner-upload-${isEditing}`}
                   label={company.company_banner ? "Replace Banner Image" : "Upload Banner Image"}
@@ -542,12 +543,12 @@ export default function CompanyProfile() {
 
         {/* Company Information */}
         <Card>
-          <div className="p-6">
-            <h3 className="text-lg font-medium text-secondary-900 mb-6">
+          <div className="p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-medium text-secondary-900 mb-4 sm:mb-6">
               Company Information
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               <FormField
                 label="Company Name"
                 name="name"

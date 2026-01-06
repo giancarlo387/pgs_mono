@@ -204,7 +204,8 @@ export default function ChatMonitoring() {
           </div>
         </Card>
 
-        <Card>
+        {/* Desktop Table */}
+        <Card className="hidden lg:block">
           <div className="overflow-x-auto">
             {loading ? (
               <div className="text-center py-12">
@@ -343,6 +344,101 @@ export default function ChatMonitoring() {
             )}
           </div>
         </Card>
+
+        {/* Mobile Cards */}
+        <div className="lg:hidden space-y-4">
+          {loading ? (
+            <Card className="p-6">
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            </Card>
+          ) : conversations.length === 0 ? (
+            <Card className="p-6 text-center text-gray-500">
+              <Users className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No conversations found</h3>
+            </Card>
+          ) : (
+            <>
+              {conversations.map((conversation) => (
+                <Card key={conversation.id} className="p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900">Conversation #{conversation.id}</h3>
+                      <p className="text-xs text-gray-500 mt-1">{conversation.subject || 'No subject'}</p>
+                    </div>
+                    {conversation.status === 'active' ? (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    ) : conversation.status === 'pending' ? (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                    ) : (
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">Closed</span>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 mb-3 pb-3 border-b border-gray-200">
+                    <div>
+                      <p className="text-xs text-gray-500">Participants</p>
+                      <p className="text-sm text-gray-900">{conversation.participants?.join(', ') || 'N/A'}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <p className="text-xs text-gray-500">Messages</p>
+                        <p className="text-sm font-medium text-gray-900">{conversation.message_count || 0}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Last Activity</p>
+                        <p className="text-sm text-gray-900">
+                          {new Date(conversation.updated_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => router.push(`/admin/chat/${conversation.id}`)}
+                      className="text-xs"
+                    >
+                      <Eye className="h-4 w-4 mr-1" />
+                      View
+                    </Button>
+                  </div>
+                </Card>
+              ))}
+
+              {totalPages > 1 && (
+                <Card className="p-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="text-sm text-gray-700 text-center">
+                      Page {currentPage} of {totalPages}
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

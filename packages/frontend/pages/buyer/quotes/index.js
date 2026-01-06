@@ -350,123 +350,130 @@ export default function MyQuotes() {
         <title>My Quotes - Buyer Portal</title>
       </Head>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
           <div>
-            <h1 className="text-2xl font-bold text-secondary-900">My Quotes</h1>
-            <p className="mt-1 text-sm text-secondary-600">
+            <h1 className="text-xl sm:text-2xl font-bold text-secondary-900">My Quotes</h1>
+            <p className="mt-1 text-xs sm:text-sm text-secondary-600">
               Track and manage your direct quote requests to suppliers
             </p>
           </div>
-          <div className="flex space-x-3 mt-4 sm:mt-0">
-            <Button variant="outline" onClick={fetchQuotes}>
+          <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
+            <Button variant="outline" onClick={fetchQuotes} className="flex-1 sm:flex-initial" size="sm">
               <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
+              <span className="hidden sm:inline">Refresh</span>
             </Button>
-            <Link href="/buyer">
-              <Button>
+            <Link href="/buyer" className="flex-1 sm:flex-initial">
+              <Button size="sm" className="w-full">
                 <Plus className="w-4 h-4 mr-2" />
-                Browse Products
+                <span className="hidden sm:inline">Browse Products</span>
+                <span className="sm:hidden">Browse</span>
               </Button>
             </Link>
           </div>
         </div>
 
         {/* Stats Cards - Alibaba Style */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          <Card className="p-4 hover:shadow-md transition-shadow">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-secondary-600 uppercase tracking-wide">Total</p>
-                <p className="text-2xl font-bold text-secondary-900">{stats.total_quotes}</p>
+                <p className="text-lg sm:text-2xl font-bold text-secondary-900">{stats.total_quotes}</p>
               </div>
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-5 h-5 text-blue-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-4 hover:shadow-md transition-shadow">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-yellow-600 uppercase tracking-wide">Pending</p>
-                <p className="text-2xl font-bold text-yellow-800">{stats.pending}</p>
+                <p className="text-lg sm:text-2xl font-bold text-yellow-800">{stats.pending}</p>
               </div>
-              <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <Timer className="w-5 h-5 text-yellow-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Timer className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-4 hover:shadow-md transition-shadow">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-blue-600 uppercase tracking-wide">Responded</p>
-                <p className="text-2xl font-bold text-blue-800">{stats.responded}</p>
+                <p className="text-xs font-medium text-blue-600 uppercase tracking-wide hidden sm:inline">Responded</p>
+                <p className="text-xs font-medium text-blue-600 uppercase tracking-wide sm:hidden">Reply</p>
+                <p className="text-lg sm:text-2xl font-bold text-blue-800">{stats.responded}</p>
               </div>
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <MessageSquare className="w-5 h-5 text-blue-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-4 hover:shadow-md transition-shadow">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-green-600 uppercase tracking-wide">Accepted</p>
-                <p className="text-2xl font-bold text-green-800">{stats.accepted}</p>
+                <p className="text-xs font-medium text-green-600 uppercase tracking-wide hidden sm:inline">Accepted</p>
+                <p className="text-xs font-medium text-green-600 uppercase tracking-wide sm:hidden">Accept</p>
+                <p className="text-lg sm:text-2xl font-bold text-green-800">{stats.accepted}</p>
               </div>
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-4 hover:shadow-md transition-shadow">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-red-600 uppercase tracking-wide">Rejected</p>
-                <p className="text-2xl font-bold text-red-800">{stats.rejected}</p>
+                <p className="text-xs font-medium text-red-600 uppercase tracking-wide hidden sm:inline">Rejected</p>
+                <p className="text-xs font-medium text-red-600 uppercase tracking-wide sm:hidden">Reject</p>
+                <p className="text-lg sm:text-2xl font-bold text-red-800">{stats.rejected}</p>
               </div>
-              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                <XCircle className="w-5 h-5 text-red-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-4 hover:shadow-md transition-shadow">
+          <Card className="p-3 sm:p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">Expired</p>
-                <p className="text-2xl font-bold text-gray-800">{stats.expired}</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-800">{stats.expired}</p>
               </div>
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                <AlertCircle className="w-5 h-5 text-gray-600" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
               </div>
             </div>
           </Card>
         </div>
 
         {/* Filters and Controls */}
-        <Card className="p-4">
-          <div className="flex flex-col lg:flex-row gap-4">
+        <Card className="p-3 sm:p-4">
+          <div className="flex flex-col gap-3 sm:gap-4">
             {/* Search */}
-            <div className="flex-1">
+            <div className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-4 h-4" />
                 <input
                   type="text"
-                  placeholder="Search by product name, supplier, or quote ID..."
+                  placeholder="Search quotes..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="w-full pl-10 pr-4 py-2 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 text-sm border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
             </div>
 
-            {/* Status Filter */}
-            <div className="flex flex-wrap gap-2">
+            {/* Status Filters & Date - Responsive Layout */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Status Filter - Horizontal scroll on mobile */}
+              <div className="flex-1 overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0">
+                <div className="flex gap-2 min-w-max sm:flex-wrap sm:min-w-0">
               {[
                 { key: 'all', label: 'All', count: stats.total_quotes },
                 { key: 'pending', label: 'Pending', count: stats.pending_quotes },
@@ -478,49 +485,52 @@ export default function MyQuotes() {
                 <button
                   key={filter.key}
                   onClick={() => handleStatusFilter(filter.key)}
-                  className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${
                     statusFilter === filter.key
                       ? 'bg-primary-100 text-primary-700 border border-primary-200'
                       : 'text-secondary-600 hover:bg-secondary-100 border border-transparent'
                   }`}
                 >
-                  {filter.label} ({filter.count})
+                  {filter.label} <span className="hidden sm:inline">({filter.count})</span>
                 </button>
               ))}
-            </div>
+                </div>
+              </div>
 
-            {/* Date Filter */}
-            <div className="relative">
-              <select
-                value={dateFilter}
-                onChange={(e) => handleDateFilter(e.target.value)}
-                className="appearance-none bg-white border border-secondary-300 rounded-lg px-4 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-              >
-                <option value="all">All Time</option>
-                <option value="today">Today</option>
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-                <option value="quarter">This Quarter</option>
-              </select>
-              <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-secondary-400 pointer-events-none" />
+              {/* Date Filter */}
+              <div className="relative w-full sm:w-auto">
+                <select
+                  value={dateFilter}
+                  onChange={(e) => handleDateFilter(e.target.value)}
+                  className="appearance-none w-full bg-white border border-secondary-300 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 pr-8 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                >
+                  <option value="all">All Time</option>
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="quarter">This Quarter</option>
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-secondary-400 pointer-events-none" />
+              </div>
             </div>
           </div>
 
           {/* Bulk Actions */}
           {selectedQuotes.length > 0 && (
-            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-blue-800">
+            <div className="mt-3 sm:mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <span className="text-xs sm:text-sm font-medium text-blue-800">
                   {selectedQuotes.length} quote{selectedQuotes.length > 1 ? 's' : ''} selected
                 </span>
-                <div className="flex space-x-2">
-                  <Button size="sm" variant="outline">
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" className="flex-1 sm:flex-initial">
                     <Download className="w-4 h-4 mr-1" />
-                    Export
+                    <span className="text-xs">Export</span>
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" className="flex-1 sm:flex-initial">
                     <MessageSquare className="w-4 h-4 mr-1" />
-                    Bulk Message
+                    <span className="text-xs hidden sm:inline">Bulk Message</span>
+                    <span className="text-xs sm:hidden">Message</span>
                   </Button>
                 </div>
               </div>
@@ -565,9 +575,9 @@ export default function MyQuotes() {
         {/* Quotes List */}
         {!loading && !error && quotes.length > 0 && (
           <>
-            {/* Table Header */}
-            <Card className="overflow-hidden">
-              <div className="px-6 py-3 bg-secondary-50 border-b border-secondary-200">
+            {/* Table Header - Hidden on mobile */}
+            <Card className="overflow-hidden hidden md:block">
+              <div className="px-4 sm:px-6 py-3 bg-secondary-50 border-b border-secondary-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <input
@@ -576,15 +586,15 @@ export default function MyQuotes() {
                       onChange={handleSelectAll}
                       className="rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
                     />
-                    <span className="text-sm font-medium text-secondary-700">
+                    <span className="text-xs sm:text-sm font-medium text-secondary-700">
                       {paginationInfo.from}-{paginationInfo.to} of {paginationInfo.total} quotes
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-secondary-600">Sort by:</span>
+                    <span className="text-xs sm:text-sm text-secondary-600">Sort by:</span>
                     <button
                       onClick={() => handleSort('created_at')}
-                      className={`text-sm font-medium flex items-center space-x-1 ${
+                      className={`text-xs sm:text-sm font-medium flex items-center space-x-1 ${
                         sortBy === 'created_at' ? 'text-primary-600' : 'text-secondary-600 hover:text-secondary-900'
                       }`}
                     >
@@ -593,7 +603,7 @@ export default function MyQuotes() {
                     </button>
                     <button
                       onClick={() => handleSort('deadline')}
-                      className={`text-sm font-medium flex items-center space-x-1 ${
+                      className={`text-xs sm:text-sm font-medium flex items-center space-x-1 ${
                         sortBy === 'deadline' ? 'text-primary-600' : 'text-secondary-600 hover:text-secondary-900'
                       }`}
                     >
@@ -602,7 +612,7 @@ export default function MyQuotes() {
                     </button>
                     <button
                       onClick={() => handleSort('quoted_price')}
-                      className={`text-sm font-medium flex items-center space-x-1 ${
+                      className={`text-xs sm:text-sm font-medium flex items-center space-x-1 ${
                         sortBy === 'quoted_price' ? 'text-primary-600' : 'text-secondary-600 hover:text-secondary-900'
                       }`}
                     >
@@ -613,155 +623,163 @@ export default function MyQuotes() {
                 </div>
               </div>
 
-              {/* Quotes Table */}
+              {/* Quotes Table - Desktop */}
               <div className="divide-y divide-secondary-200">
                 {quotes.map((quote) => (
-                  <div key={quote.id} className="p-6 hover:bg-secondary-50 transition-colors">
-                    <div className="flex items-start space-x-4">
-                      {/* Checkbox */}
+                  <div key={quote.id} className="p-3 sm:p-4 md:p-6 hover:bg-secondary-50 transition-colors">
+                    <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                      {/* Checkbox - Hidden on mobile */}
                       <input
                         type="checkbox"
                         checked={selectedQuotes.includes(quote.id)}
                         onChange={() => handleSelectQuote(quote.id)}
-                        className="mt-1 rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
+                        className="hidden md:block mt-1 rounded border-secondary-300 text-primary-600 focus:ring-primary-500"
                       />
 
-                      {/* Product Image */}
-                      <div className="w-16 h-16 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        {quote.product?.image ? (
-                          <img
-                            src={quote.product.image}
-                            alt={quote.product.name}
-                            className="w-full h-full object-cover rounded-lg"
-                          />
-                        ) : (
-                          <Package className="w-6 h-6 text-secondary-400" />
-                        )}
-                      </div>
+                      {/* Mobile: Top row with image and basic info */}
+                      <div className="flex items-start space-x-3 w-full sm:w-auto">
+                        {/* Product Image */}
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          {quote.product?.image ? (
+                            <img
+                              src={quote.product.image}
+                              alt={quote.product.name}
+                              className="w-full h-full object-cover rounded-lg"
+                            />
+                          ) : (
+                            <Package className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-400" />
+                          )}
+                        </div>
 
-                      {/* Quote Details */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            {/* Product and Supplier */}
-                            <div className="flex items-center space-x-2 mb-1">
-                              <h3 className="text-lg font-semibold text-secondary-900 truncate">
-                                {quote.product?.name || 'Product'}
-                              </h3>
-                              <span className="text-sm text-secondary-500">
-                                Quote #{quote.id.toString().padStart(6, '0')}
-                              </span>
-                            </div>
-                            
-                            <div className="flex items-center space-x-4 text-sm text-secondary-600 mb-2">
-                              <div className="flex items-center space-x-1">
-                                <Building2 className="w-4 h-4" />
-                                <span>{quote.supplier?.name || quote.company?.name || 'Supplier'}</span>
+                        {/* Quote Details */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                            <div className="flex-1 min-w-0">
+                              {/* Product and Supplier */}
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mb-1">
+                                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-secondary-900 truncate">
+                                  {quote.product?.name || 'Product'}
+                                </h3>
+                                <span className="text-xs sm:text-sm text-secondary-500">
+                                  Quote #{quote.id.toString().padStart(6, '0')}
+                                </span>
                               </div>
-                              <div className="flex items-center space-x-1">
-                                <Package className="w-4 h-4" />
-                                <span>{quote.quantity?.toLocaleString()} {quote.unit || 'units'}</span>
-                              </div>
-                              {quote.target_price && (
+                              
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-xs sm:text-sm text-secondary-600 mb-2 gap-1 sm:gap-0">
                                 <div className="flex items-center space-x-1">
-                                  <DollarSign className="w-4 h-4" />
-                                  <span>Target: {formatCurrency(quote.target_price)}</span>
+                                  <Building2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  <span className="truncate">{quote.supplier?.name || quote.company?.name || 'Supplier'}</span>
                                 </div>
-                              )}
+                                <div className="flex items-center space-x-1">
+                                  <Package className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  <span>{quote.quantity?.toLocaleString()} {quote.unit || 'units'}</span>
+                                </div>
+                                {quote.target_price && (
+                                  <div className="flex items-center space-x-1">
+                                    <DollarSign className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <span>Target: {formatCurrency(quote.target_price)}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Status and Timing */}
+                              <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                                <div className={`inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium border ${getStatusColor(quote.status)}`}>
+                                  {getStatusIcon(quote.status)}
+                                  <span className="ml-1 capitalize">{quote.status}</span>
+                                </div>
+                                
+                                <span className="text-xs text-secondary-500">
+                                  Created {formatDate(quote.created_at)}
+                                </span>
+                                
+                                {quote.deadline && (
+                                  <div className="flex items-center space-x-1 text-xs">
+                                    {getDaysRemaining(quote.deadline) > 0 ? (
+                                      <>
+                                        <Clock className="w-3 h-3 text-orange-500" />
+                                        <span className="text-orange-600">
+                                          {getDaysRemaining(quote.deadline)} days left
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <AlertCircle className="w-3 h-3 text-red-500" />
+                                        <span className="text-red-600">Expired</span>
+                                      </>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </div>
 
-                            {/* Status and Timing */}
-                            <div className="flex items-center space-x-4">
-                              <div className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(quote.status)}`}>
-                                {getStatusIcon(quote.status)}
-                                <span className="ml-1 capitalize">{quote.status}</span>
-                              </div>
-                              
-                              <span className="text-xs text-secondary-500">
-                                Created {formatDate(quote.created_at)}
-                              </span>
-                              
-                              {quote.deadline && (
-                                <div className="flex items-center space-x-1 text-xs">
-                                  {getDaysRemaining(quote.deadline) > 0 ? (
-                                    <>
-                                      <Clock className="w-3 h-3 text-orange-500" />
-                                      <span className="text-orange-600">
-                                        {getDaysRemaining(quote.deadline)} days left
-                                      </span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <AlertCircle className="w-3 h-3 text-red-500" />
-                                      <span className="text-red-600">Expired</span>
-                                    </>
-                                  )}
+                            {/* Price and Actions - Responsive layout */}
+                            <div className="w-full sm:w-auto sm:text-right mt-3 sm:mt-0">
+                              {quote.quoted_price ? (
+                                <div className="mb-2 sm:mb-2">
+                                  <p className="text-base sm:text-lg font-bold text-green-600">
+                                    {formatCurrency(quote.quoted_price)}
+                                  </p>
+                                  <p className="text-xs text-secondary-500">
+                                    per {quote.unit || 'unit'}
+                                  </p>
+                                </div>
+                              ) : (
+                                <div className="mb-2">
+                                  <p className="text-xs sm:text-sm text-secondary-500">
+                                    Awaiting quote
+                                  </p>
                                 </div>
                               )}
-                            </div>
-                          </div>
 
-                          {/* Price and Actions */}
-                          <div className="text-right">
-                            {quote.quoted_price ? (
-                              <div className="mb-2">
-                                <p className="text-lg font-bold text-green-600">
-                                  {formatCurrency(quote.quoted_price)}
-                                </p>
-                                <p className="text-xs text-secondary-500">
-                                  per {quote.unit || 'unit'}
-                                </p>
-                              </div>
-                            ) : (
-                              <div className="mb-2">
-                                <p className="text-sm text-secondary-500">
-                                  Awaiting quote
-                                </p>
-                              </div>
-                            )}
-
-                            <div className="flex space-x-2">
-                              <Link href={`/buyer/quotes/${quote.id}`}>
-                                <Button size="sm" variant="outline">
-                                  <Eye className="w-4 h-4" />
-                                </Button>
-                              </Link>
-                              
-                              {/* Accept/Reject buttons for responded quotes */}
-                              {quote.status === 'responded' && (
-                                <>
-                                  <Button 
-                                    size="sm" 
-                                    className="bg-green-600 hover:bg-green-700 text-white"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      handleQuickAccept(quote.id);
-                                    }}
-                                  >
-                                    <CheckCircle className="w-4 h-4" />
+                              {/* Action buttons - responsive grid */}
+                              <div className="flex flex-wrap gap-2">
+                                <Link href={`/buyer/quotes/${quote.id}`}>
+                                  <Button size="sm" variant="outline" className="flex-1 sm:flex-initial">
+                                    <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <span className="ml-1 text-xs sm:hidden">View</span>
                                   </Button>
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    className="text-red-600 border-red-200 hover:bg-red-50"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      handleQuickReject(quote.id);
-                                    }}
-                                  >
-                                    <XCircle className="w-4 h-4" />
+                                </Link>
+                                
+                                {/* Accept/Reject buttons for responded quotes */}
+                                {quote.status === 'responded' && (
+                                  <>
+                                    <Button 
+                                      size="sm" 
+                                      className="bg-green-600 hover:bg-green-700 text-white flex-1 sm:flex-initial"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        handleQuickAccept(quote.id);
+                                      }}
+                                    >
+                                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                                      <span className="ml-1 text-xs sm:hidden">Accept</span>
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      className="text-red-600 border-red-200 hover:bg-red-50 flex-1 sm:flex-initial"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        handleQuickReject(quote.id);
+                                      }}
+                                    >
+                                      <XCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                                      <span className="ml-1 text-xs sm:hidden">Reject</span>
+                                    </Button>
+                                  </>
+                                )}
+                                
+                                <Link href={`/buyer/messages?supplier=${quote.company_id}&quote=${quote.id}`}>
+                                  <Button size="sm" variant="outline" className="flex-1 sm:flex-initial">
+                                    <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <span className="ml-1 text-xs sm:hidden">Chat</span>
                                   </Button>
-                                </>
-                              )}
-                              
-                              <Link href={`/buyer/messages?supplier=${quote.company_id}&quote=${quote.id}`}>
-                                <Button size="sm" variant="outline">
-                                  <MessageSquare className="w-4 h-4" />
+                                </Link>
+                                <Button size="sm" variant="outline" className="hidden sm:flex">
+                                  <MoreHorizontal className="w-4 h-4" />
                                 </Button>
-                              </Link>
-                              <Button size="sm" variant="outline">
-                                <MoreHorizontal className="w-4 h-4" />
-                              </Button>
+                              </div>
                             </div>
                           </div>
                         </div>
