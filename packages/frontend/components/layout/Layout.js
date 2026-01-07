@@ -40,7 +40,8 @@ export default function Layout({ children }) {
   const isAdminPage = router.pathname.startsWith('/admin');
   const isBuyerUser = user?.usertype === 'buyer';
   const isAgentUser = user?.usertype === 'agent';
-  const isAgentPage = router.pathname.startsWith('/agent') || (isAgentUser && router.pathname === '/chat');
+  // Fix: /agents is seller's agent management, /agent is agent user pages
+  const isAgentPage = (router.pathname.startsWith('/agent') && !router.pathname.startsWith('/agents')) || (isAgentUser && router.pathname === '/chat');
   const isBuyerPage = router.pathname.startsWith('/buyer') || (isBuyerUser && router.pathname === '/chat');
   const isBuyerDashboard = router.pathname === '/buyer';
   const isUnauthenticatedBuyerPage = !isAuthenticated && router.pathname.startsWith('/buyer');
